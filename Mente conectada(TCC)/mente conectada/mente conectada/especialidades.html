@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mente Conectada - Especialidades</title>
+  <!-- Fontes e ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    *{
+      margin:0; padding:0; 
+      box-sizing:border-box;}
+    a{text-decoration:none;}
+
+    body{font-family:'Roboto',sans-serif; background:#f9f9fb; color:#333;}
+    .container{display:flex; height:100vh; overflow:hidden; transition:all 0.3s;}
+
+    /* ===== Sidebar ===== */
+    .sidebar{
+      background: linear-gradient(180deg,#d8b4e2,#bfa0d6);
+      width:230px;
+      padding:30px 20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      box-shadow:2px 0 8px rgba(0,0,0,0.1);
+      position:relative;
+    }
+    .sidebar img{width:120px; margin-bottom:40px;}
+    .sidebar nav{display:flex; flex-direction:column; gap:12px; width:100%; position:relative;}
+    .sidebar-indicator{
+      position:absolute; left:0; width:8px; height:40px;
+      background:linear-gradient(180deg,#fff,#ffccff); border-radius:4px;
+      box-shadow:0 0 12px rgba(255,255,255,0.9);
+      transition:top 0.3s,height 0.3s,box-shadow 0.3s;
+      animation:pulse 2s infinite;
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 8px rgba(255,255,255,0.7);}
+      50%{box-shadow:0 0 16px rgba(255,255,255,1);}
+      100%{box-shadow:0 0 8px rgba(255,255,255,0.7);}
+    }
+    .sidebar a{display:flex; align-items:center; gap:10px; padding:10px 15px; border-radius:8px; color:#fff; font-weight:500; font-size:16px; transition:background 0.3s,color 0.3s, transform 0.3s; position:relative; z-index:1;}
+    .sidebar a:hover{background:rgba(255,255,255,0.25); box-shadow:0 0 12px rgba(255,255,255,0.6); transform:scale(1.02);}
+    .sidebar a.active{background:rgba(255,255,255,0.25);}
+
+    /* ===== Top Bar ===== */
+    .top-bar{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:20px 40px; background:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+      position:relative;
+    }
+
+     .login-group {
+      display:flex;
+      align-items:center;
+      gap:20px;
+      font-size:16px;
+      font-weight:500;
+    }
+
+    .login-group a {
+      color:#555;
+      transition:color 0.3s;
+    }
+
+    .login-group a:hover {color:#6a0dad;}
+
+    .btn-psicologo {
+      color:#4a2c6e !important;
+      font-weight:600;
+    }
+
+    .btn-psicologo:hover {color:#8b2ddb !important;}
+
+    .top-menu{display:flex; gap:30px; position:relative;}
+    .top-menu a{
+      font-weight:500; color:#555;
+      padding:8px 4px; position:relative;
+      transition: color 0.3s;
+    }
+    .top-menu a.active,.top-menu a:hover{color:#74275f;}
+    .top-indicator{
+      position:absolute; bottom:-4px; left:0;
+      height:4px; width:50px;
+      background:linear-gradient(90deg,#ff99ff,#cc66ff);
+      border-radius:2px;
+      transition:left 0.3s,width 0.3s;
+      box-shadow:0 0 10px rgba(255,0,255,0.7);
+      animation:pulseTop 2s infinite;
+    }
+    @keyframes pulseTop{
+      0%{box-shadow:0 0 6px rgba(255,0,255,0.6);}
+      50%{box-shadow:0 0 14px rgba(255,0,255,0.9);}
+      100%{box-shadow:0 0 6px rgba(255,0,255,0.6);}
+    }
+
+    .login{display:flex; align-items:center; font-size:14px; font-weight:500; color:#555; cursor:pointer;}
+    .login img{width:28px; height:28px; border-radius:50%; margin-right:8px;}
+    .login:hover{color:#6a0dad;}
+
+    /* ===== Conteúdo ===== */
+    .main{flex:1; display:flex; flex-direction:column; background:#fff; overflow-y:auto;}
+    .content{padding:40px 60px; text-align:center;}
+    .content h1{font-family:'Playfair Display',serif; font-size:36px; margin-bottom:20px; color:#4a2c6e;}
+    .content p{font-size:16px; line-height:1.7; margin-bottom:15px; color:#555;}
+
+    /* ===== Seção Como posso ajudar ===== */
+    .help-section{padding:40px 0; background:#f4f0f8; text-align:center;}
+    .help-section h2{font-size:28px; margin-bottom:30px; color:#4a2c6e;}
+    .help-cards{display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
+    .help-card{
+      background:#fff; border-radius:12px; padding:20px;
+      width:180px; text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.4s, box-shadow 0.4s, background 0.3s;
+      cursor:pointer;
+    }
+    .help-card:hover{
+      transform:translateY(-8px) scale(1.05);
+      box-shadow:0 12px 24px rgba(0,0,0,0.18);
+      background: linear-gradient(135deg,#d8b4e2,#bfa0d6);
+      color:#fff;
+    }
+    .help-card img{width:80px; height:80px; object-fit:cover; margin-bottom:15px; border-radius:8px;}
+    .help-card p{font-size:14px; font-weight:500;}
+
+    .help-button{
+      display:block; margin:30px auto 0; padding:12px 25px;
+      background:#6a0dad; color:#fff; font-weight:600;
+      border:none; border-radius:8px; cursor:pointer; font-size:16px;
+      transition: all 0.4s; box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    }
+    .help-button:hover{
+      background:#8b2ddb;
+      box-shadow:0 8px 24px rgba(0,0,0,0.25);
+      transform:translateY(-3px);
+    }
+
+    body.preto-branco, body.preto-branco * {
+            background: #181818 !important;
+            color: #fff !important;
+            box-shadow: none !important;
+            border-color: #444 !important;
+        }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <img src="img/logo.png.png" alt="Logo Mente Conectada">
+      <nav>
+        <a href="page1.html"><span>🏠</span>Início</a>
+        <a href="especialidades.html" class="active"><span>📖</span>Especialidades</a>
+        <a href="blog.html"><span>📰</span>Blog</a>
+        <a href="autoajuda.html"><span>💜</span>Autoajuda</a>
+        <a href="feedback.php"><span>💬</span>Feedback</a>
+        <a href="agendamento.html"><span>📅</span>Agendamento</a>
+      </nav>
+      <div class="sidebar-indicator"></div>
+
+        <button id="acessibilidade-btn" style="
+        margin:20px; 
+        padding:12px 18px; 
+        border-radius:10px; 
+        border:none; 
+        width:90%; 
+        font-size:15px; 
+        font-weight:600; 
+        color:#fff; 
+        background: linear-gradient(90deg, #b06ab3);
+        box-shadow:0 4px 10px rgba(0,0,0,0.15); 
+        cursor:pointer;
+        transition: transform 0.2s ease, opacity 0.3s;
+      ">
+        <i class="fa-solid fa-universal-access"></i> Modo Acessível
+      </button>
+    
+      <script>
+        document.getElementById('acessibilidade-btn').onclick = function() {
+            document.body.classList.toggle('preto-branco');
+        };
+     </script>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="top-bar">
+        <div class="top-menu">
+          <a href="page1.html" class="active">Início</a>
+          <a href="especialidades.html">Especialidades</a>
+          <a href="blog.html">Blog</a>
+          <a href="autoajuda.html">Autoajuda</a>
+          <a href="feedback.php">Feedback</a>
+          <a href="agendamento.html" class="active">Agendamento</a>
+          <div class="top-indicator"></div>
+        </div>
+        <div class="login-group">
+          <a href="login_psicologo.html" class="btn-psicologo">Área do Psicólogo</a>
+          <a href="login.html" class="login-link">Login/Cadastrar</a>
+        </div>
+      </div>
+
+      <!-- Conteúdo principal -->
+      <div class="content">
+        <h1>Nossas Especialidades</h1>
+        <p>Oferecemos acompanhamento profissional para diferentes áreas da saúde mental, ajudando você a lidar com suas emoções e melhorar o bem-estar.</p>
+      </div>
+
+      <!-- Seção Como posso ajudar -->
+      <section class="help-section">
+        <h2>Como posso te ajudar?</h2>
+        <div class="help-cards">
+          <div class="help-card"><img src="img/ansiedade1.jpg" alt="Ansiedade"><p>Ansiedade</p></div>
+          <div class="help-card"><img src="img/Depressao.jpg" alt="Depressão"><p>Depressão</p></div>
+          <div class="help-card"><img src="img/transtorno.jpg" alt="Transtorno Bipolar"><p>Transtorno Bipolar</p></div>
+          <div class="help-card"><img src="img/estresse1.jpg" alt="Estresse"><p>Estresse</p></div>
+        </div>
+        <button class="help-button">Saiba como se cuidar melhor</button>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // ===== Sidebar indicator =====
+    const sidebar = document.querySelector('.sidebar nav');
+    const links = sidebar.querySelectorAll('a');
+    const indicator = document.querySelector('.sidebar-indicator');
+    function updateSidebarIndicator(link){
+      indicator.style.top = link.offsetTop + 'px';
+      indicator.style.height = link.offsetHeight + 'px';
+    }
+    const activeLink = sidebar.querySelector('a.active');
+    updateSidebarIndicator(activeLink);
+    links.forEach(link=>{
+      link.addEventListener('mouseover',()=>updateSidebarIndicator(link));
+      link.addEventListener('mouseout',()=>updateSidebarIndicator(sidebar.querySelector('a.active')));
+      link.addEventListener('click',()=>{
+        links.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+        updateSidebarIndicator(link);
+      });
+    });
+
+    // ===== Top menu indicator =====
+    const topMenu = document.querySelector('.top-menu');
+    const topLinks = topMenu.querySelectorAll('a');
+    const topIndicator = document.querySelector('.top-indicator');
+    function updateTopIndicator(link){
+      topIndicator.style.left = link.offsetLeft + "px";
+      topIndicator.style.width = link.offsetWidth + "px";
+    }
+    const activeTop = topMenu.querySelector('a.active');
+    updateTopIndicator(activeTop);
+    topLinks.forEach(link=>{
+      link.addEventListener('mouseover',()=>updateTopIndicator(link));
+      link.addEventListener('mouseout',()=>updateTopIndicator(topMenu.querySelector('a.active')));
+      link.addEventListener('click',()=>{
+        topLinks.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+        updateTopIndicator(link);
+      });
+    });
+    window.addEventListener('resize',()=>updateTopIndicator(topMenu.querySelector('a.active')));
+  </script>
+</body>
+</html>

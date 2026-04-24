@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mente Conectada - Agendamento</title>
+  <!-- Fontes e ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    *{margin:0; padding:0; box-sizing:border-box;}
+    a{text-decoration:none;}
+    body{font-family:'Roboto',sans-serif; background:#f9f9fb; color:#333;}
+    .container{display:flex; min-height:100vh; transition:all 0.3s;}
+
+    /* Sidebar */
+    .sidebar{
+      background: linear-gradient(180deg,#d8b4e2,#bfa0d6);
+      width:230px;
+      padding:30px 20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      box-shadow:2px 0 8px rgba(0,0,0,0.1);
+      position:relative;
+    }
+    .sidebar img{width:120px; margin-bottom:40px;}
+    .sidebar nav{display:flex; flex-direction:column; gap:12px; width:100%; position:relative;}
+    .sidebar-indicator{
+      position:absolute; left:0; width:8px; height:40px;
+      background:linear-gradient(180deg,#fff,#ffccff); border-radius:4px;
+      box-shadow:0 0 12px rgba(255,255,255,0.9);
+      transition:top 0.3s,height 0.3s,box-shadow 0.3s;
+      animation:pulse 2s infinite;
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 8px rgba(255,255,255,0.7);}
+      50%{box-shadow:0 0 16px rgba(255,255,255,1);}
+      100%{box-shadow:0 0 8px rgba(255,255,255,0.7);}
+    }
+    .sidebar a{display:flex; align-items:center; gap:10px; padding:10px 15px; border-radius:8px; color:#fff; font-weight:500; font-size:16px; transition:background 0.3s,color 0.3s, transform 0.3s; position:relative; z-index:1;}
+    .sidebar a:hover{background:rgba(255,255,255,0.25); box-shadow:0 0 12px rgba(255,255,255,0.6); transform:scale(1.02);}
+    .sidebar a.active{background:rgba(255,255,255,0.25);}
+
+    /* Top Bar */
+    .top-bar{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:20px 40px; background:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+      position:relative;
+    }
+
+    .login-group {
+      display:flex;
+      align-items:center;
+      gap:20px;
+      font-size:16px;
+      font-weight:500;
+    }
+
+    .login-group a {
+      color:#555;
+      transition:color 0.3s;
+    }
+
+    .login-group a:hover {color:#6a0dad;}
+
+    .btn-psicologo {
+      color:#4a2c6e !important;
+      font-weight:600;
+    }
+
+    .btn-psicologo:hover {color:#8b2ddb !important;}
+
+    .top-menu{display:flex; gap:30px; position:relative;}
+    .top-menu a{
+      font-weight:500; color:#555;
+      padding:8px 4px; position:relative;
+      transition: color 0.3s;
+    }
+    .top-menu a.active,.top-menu a:hover{color:#74275f;}
+    .top-indicator{
+      position:absolute; bottom:-4px; left:0;
+      height:4px; width:50px;
+      background:linear-gradient(90deg,#ff99ff,#cc66ff);
+      border-radius:2px;
+      transition:left 0.3s,width 0.3s;
+      box-shadow:0 0 10px rgba(255,0,255,0.7);
+      animation:pulseTop 2s infinite;
+    }
+    @keyframes pulseTop{
+      0%{box-shadow:0 0 6px rgba(255,0,255,0.6);}
+      50%{box-shadow:0 0 14px rgba(255,0,255,0.9);}
+      100%{box-shadow:0 0 6px rgba(255,0,255,0.6);}
+    }
+    .login{display:flex; align-items:center; font-size:14px; font-weight:500; color:#555; cursor:pointer;}
+    .login img{width:28px; height:28px; border-radius:50%; margin-right:8px;}
+    .login:hover{color:#6a0dad;}
+
+    /* Main Content */
+    .main{flex:1; display:flex; flex-direction:column; background:#fff; overflow-y:auto;}
+    .content{padding:40px 60px; text-align:center;}
+    .content h1{font-family:'Playfair Display',serif; font-size:36px; margin-bottom:20px; color:#4a2c6e;}
+    .content p{font-size:16px; line-height:1.7; margin-bottom:30px; color:#555;}
+
+    /* Formulário Agendamento */
+    .form-box{
+      max-width:600px;
+      margin:0 auto 50px auto;
+      background:#fff; padding:30px; border-radius:16px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      text-align:left;
+    }
+    .form-box h2{
+      font-family:'Playfair Display',serif; font-size:28px;
+      color:#6b3fa0; margin-bottom:20px; text-align:center;
+    }
+    .form-box label{display:block; margin-bottom:5px; font-weight:500;}
+    .form-box input, .form-box select{
+      width:100%; padding:10px; margin-bottom:15px;
+      border-radius:10px; border:1px solid #ccc; font-size:16px;
+    }
+    .form-box button{
+      background:linear-gradient(90deg,#b06ab3,#9b5fc0);
+      border:none; padding:12px; width:100%;
+      font-size:16px; color:#fff; font-weight:600;
+      border-radius:10px; cursor:pointer;
+      transition:opacity 0.3s;
+    }
+    .form-box button:hover{opacity:0.85;}
+
+    /* Botão Modo Acessível */
+    #acessibilidade-btn{
+      margin-top: 25px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: none;
+      width: 90%;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(90deg, #b06ab3,#9b5fc0);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.3s;
+    }
+    #acessibilidade-btn:hover {transform: scale(1.05); opacity:0.9;}
+
+    /* Rodapé */
+    footer {
+      background-color: #bfa0d6;
+      color: white;
+      text-align: center;
+      padding: 1.8rem 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      user-select: none;
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Modo Acessível */
+    body.preto-branco, body.preto-branco * {
+      background: #181818 !important;
+      color: #fff !important;
+      box-shadow: none !important;
+      border-color: #444 !important;
+    }
+
+    /* Responsividade */
+    @media (max-width:768px){
+      .container{flex-direction:column;}
+      .sidebar{width:100%; flex-direction:row; overflow-x:auto; padding:15px;}
+      .sidebar img{width:80px; margin-bottom:0; margin-right:15px;}
+      .sidebar nav{flex-direction:row; gap:10px;}
+      .sidebar a{padding:8px 12px; font-size:14px;}
+      .main{flex:1;}
+      .content{padding:20px;}
+      .form-box{padding:20px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <img src="img/logo.png.png" alt="Logo Mente Conectada">
+      <nav>
+        <a href="page1.html"><span>🏠</span>Início</a>
+        <a href="especialidades.html"><span>📖</span>Especialidades</a>
+        <a href="blog.html"><span>📰</span>Blog</a>
+        <a href="autoajuda.html"><span>💜</span>Autoajuda</a>
+        <a href="feedback.php"><span>💬</span>Feedback</a>
+        <a href="agendamento.html" class="active"><span>📅</span>Agendamento</a>
+      </nav>
+      <div class="sidebar-indicator"></div>
+      
+      <button id="acessibilidade-btn">
+        <i class="fa-solid fa-universal-access"></i> Modo Acessível
+      </button>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="top-bar">
+        <div class="top-menu">
+          <a href="page1.html">Início</a>
+          <a href="especialidades.html">Especialidades</a>
+          <a href="blog.html">Blog</a>
+          <a href="autoajuda.html">Autoajuda</a>
+          <a href="feedback.php">Feedback</a>
+          <a href="agendamento.html" class="active">Agendamento</a>
+          <div class="top-indicator"></div>
+        </div>
+        <div class="login-group">
+          <a href="login_psicologo.html" class="btn-psicologo">Área do Psicólogo</a>
+          <a href="login.html" class="login-link">Login/Cadastrar</a>
+        </div>
+      </div>
+
+      <!-- Conteúdo Agendamento -->
+      <div class="content">
+        <h1>Agendamento de Consulta</h1>
+        <p>Escolha a especialidade, data e horário para agendar sua consulta.</p>
+
+        <div class="form-box">
+          <h2>Agende sua Consulta</h2>
+          <form id="form-agendamento">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" placeholder="Digite seu nome" required>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" placeholder="Digite seu e-mail" required>
+
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+
+            <label for="especialidade">Especialidade:</label>
+            <select id="especialidade" required>
+              <option value="">Selecione...</option>
+              <option value="psicologia">Psicologia – R$ 160,00</option>
+              <option value="psiquiatria">Psiquiatria – R$ 250,00</option>
+            
+            </select>
+
+            <div id="valor-consulta" style="font-weight:600; color:#6b3fa0; margin-bottom:15px;">
+          
+            </div>
+
+            <label for="data">Data:</label>
+            <input type="date" id="data" required>
+
+            <label for="hora">Hora:</label>
+            <input type="time" id="hora" required>
+
+            <button type="submit">Agendar</button>
+          </form>
+
+          <hr style="margin:25px 0;">
+          <h3 style="text-align:center; color:#4a2c6e;">Tabela de Valores</h3>
+          <ul style="list-style:none; padding:0; font-size:16px; line-height:1.8;">
+            <li>🧠 Psicologia: <strong>R$ 160,00</strong></li>
+            <li>💊 Psiquiatria: <strong>R$ 250,00</strong></li>
+  
+          </ul>
+        </div>
+      </div>
+
+      <footer>© 2025 Mente Conectada - Todos os direitos reservados.</footer>
+    </main>
+  </div>
+
+  <script>
+    // Botão Modo Acessível
+    document.getElementById('acessibilidade-btn').onclick = function() {
+      document.body.classList.toggle('preto-branco');
+    };
+
+    // Máscara de telefone
+    const telefone = document.getElementById('telefone');
+    telefone.addEventListener('input', function(e){
+      let x = e.target.value.replace(/\D/g,'').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+      e.target.value = !x[2] ? x[1] : '('+x[1]+') '+x[2]+(x[3] ? '-'+x[3] : '');
+    });
+
+    // Exibir valor da consulta
+    const selectEspecialidade = document.getElementById('especialidade');
+    const valorConsulta = document.getElementById('valor-consulta');
+
+    selectEspecialidade.addEventListener('change', function() {
+      let valor = '—';
+      switch (this.value) {
+        case 'psicologia':
+          valor = 'R$ 150,00';
+          break;
+        case 'psiquiatria':
+          valor = 'R$ 300,00';
+          break;
+        case 'nutricao':
+          valor = 'R$ 180,00';
+          break;
+      }
+      valorConsulta.textContent = 'Valor da consulta: ' + valor;
+    });
+
+    // Redirecionar para login ao clicar em "Agendar"
+    document.getElementById("form-agendamento").addEventListener("submit", function(e) {
+      e.preventDefault();
+      window.location.href = "login.html";
+    });
+
+    // Sidebar indicator
+    const sidebar = document.querySelector('.sidebar nav');
+    const links = sidebar.querySelectorAll('a');
+    const indicator = document.querySelector('.sidebar-indicator');
+    function updateSidebarIndicator(link){
+      indicator.style.top = link.offsetTop + 'px';
+      indicator.style.height = link.offsetHeight + 'px';
+    }
+    const activeLink = sidebar.querySelector('a.active');
+    updateSidebarIndicator(activeLink);
+    links.forEach(link=>{
+      link.addEventListener('mouseover',()=>updateSidebarIndicator(link));
+      link.addEventListener('mouseout',()=>updateSidebarIndicator(sidebar.querySelector('a.active')));
+      link.addEventListener('click',()=>{
+        links.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+        updateSidebarIndicator(link);
+      });
+    });
+
+    // Top menu indicator
+    const topMenu = document.querySelector('.top-menu');
+    const topLinks = topMenu.querySelectorAll('a');
+    const topIndicator = document.querySelector('.top-indicator');
+    function updateTopIndicator(link){
+      topIndicator.style.left = link.offsetLeft + "px";
+      topIndicator.style.width = link.offsetWidth + "px";
+    }
+    const activeTop = topMenu.querySelector('a.active');
+    updateTopIndicator(activeTop);
+    topLinks.forEach(link=>{
+      link.addEventListener('mouseover',()=>updateTopIndicator(link));
+      link.addEventListener('mouseout',()=>updateTopIndicator(topMenu.querySelector('a.active')));
+      link.addEventListener('click',()=>{
+        topLinks.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+        updateTopIndicator(link);
+      });
+    });
+    window.addEventListener('resize',()=>updateTopIndicator(topMenu.querySelector('a.active')));
+  </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Sessão - Mente Conectada</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3e8fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    form {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 360px;
+    }
+    h2 {
+      text-align: center;
+      color: #6a0dad;
+      margin-bottom: 15px;
+    }
+    label { display: block; margin-top: 10px; color: #333; }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      background: #6a0dad;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    button:hover { background: #4a067c; }
+    a { display: block; text-align: center; margin-top: 10px; color: #6a0dad; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <form action="cadastrar_sessao.php" method="POST">
+    <h2>Cadastrar Sessão</h2>
+
+    <label for="paciente_nome">Nome do Paciente:</label>
+    <input type="text" id="paciente_nome" name="paciente_nome" required>
+
+    <label for="data_sessao">Data da Sessão:</label>
+    <input type="date" id="data_sessao" name="data_sessao" required>
+
+    <label for="hora">Hora:</label>
+    <input type="time" id="hora" name="hora" required>
+
+    <label for="tipo">Tipo de Sessão:</label>
+    <select id="tipo" name="tipo">
+      <option value="Online">Online</option>
+      <option value="Presencial">Presencial</option>
+      <option value="Grupo">Grupo</option>
+    </select>
+
+    <label for="status">Status:</label>
+    <select id="status" name="status">
+      <option value="Pendente">Pendente</option>
+      <option value="Confirmada">Confirmada</option>
+      <option value="Cancelada">Cancelada</option>
+    </select>
+
+    <label for="observacoes">Observações:</label>
+    <textarea id="observacoes" name="observacoes" rows="3" placeholder="Observações adicionais..."></textarea>
+
+    <button type="submit">Salvar Sessão</button>
+    <a href="dashboard.html">Voltar ao Painel</a>
+  </form>
+
+</body>
+</html>

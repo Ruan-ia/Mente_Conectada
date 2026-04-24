@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mente Conectada - Dashboard Psicólogo</title>
+
+  <!-- Fontes e Ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Chart.js e jsPDF -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    a {text-decoration:none;}
+    body {
+      font-family:'Roboto',sans-serif;
+      background:#f9f9fb;
+      color:#333;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+    .container { flex:1; display:flex; overflow:hidden; }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      background:linear-gradient(180deg,#c49be2,#8a4fcf);
+      width:230px;
+      padding:30px 20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      box-shadow:2px 0 8px rgba(0,0,0,0.1);
+      position:relative;
+    }
+
+    .sidebar img {
+      width:120px;
+      margin-bottom:40px;
+    }
+
+    .sidebar nav {
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      width:100%;
+      position:relative;
+    }
+
+    .sidebar a {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 15px;
+      border-radius:8px;
+      color:#fff;
+      font-weight:500;
+      font-size:16px;
+      transition:background 0.3s;
+    }
+
+    .sidebar a:hover { background:rgba(255,255,255,0.25); }
+    .sidebar a.active { background:rgba(255,255,255,0.3); }
+
+    /* === BOTÕES DA SIDEBAR === */
+    #acessibilidade-btn, #logout-btn {
+      width:100%;
+      margin-top:10px;
+      background:#fff;
+      color:#7a1fa2;
+      font-weight:600;
+      font-size:15px;
+      padding:12px 20px;
+      border:none;
+      border-radius:25px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      box-shadow:0 3px 8px rgba(0,0,0,0.15);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    #acessibilidade-btn:hover, #logout-btn:hover {
+      background:#7a1fa2;
+      color:#fff;
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    #acessibilidade-btn i, #logout-btn i {
+      font-size:18px;
+    }
+
+    /* === CONTEÚDO === */
+    .main { 
+      flex:1; 
+      display:flex; 
+      flex-direction:column; 
+      background:#fff; 
+      overflow-y:auto;
+    }
+
+    .top-bar {
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center;
+      padding:20px 40px; 
+      background:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .login {
+      display:flex; 
+      align-items:center;
+      font-size:14px; 
+      font-weight:500; 
+      color:#555;
+    }
+
+    .login img { 
+      width:32px; 
+      height:32px; 
+      border-radius:50%; 
+      margin-right:8px; 
+    }
+
+    .dashboard { 
+      padding:40px 60px; 
+      display:flex; 
+      flex-direction:column; 
+      gap:30px; 
+    }
+
+    .dashboard h1 { 
+      font-family:'Playfair Display',serif; 
+      font-size:32px; 
+      color:#4a2c6e; 
+      margin-bottom:10px; 
+    }
+
+    .cards {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+    }
+
+    .card {
+      background:linear-gradient(145deg,#ffffff,#f3e8fa);
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      padding:20px;
+      transition:transform 0.3s,box-shadow 0.3s;
+    }
+
+    .card:hover { 
+      transform:translateY(-5px); 
+      box-shadow:0 8px 18px rgba(0,0,0,0.12); 
+    }
+
+    .card i { 
+      font-size:26px; 
+      color:#8a5ec4; 
+      margin-bottom:12px; 
+    }
+
+    .card h3 { 
+      font-size:18px; 
+      margin-bottom:6px; 
+      color:#4a2c6e; 
+    }
+
+    .table-section {
+      background:#f4f0f8; 
+      padding:25px;
+      border-radius:12px; 
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
+      overflow-x:auto;
+    }
+
+    .table-section h2 { 
+      font-size:22px; 
+      color:#6b409f;
+      margin-bottom:15px; 
+    }
+
+    table { 
+      width:100%; 
+      border-collapse:collapse; 
+      background:#fff; 
+      border-radius:8px; 
+      overflow:hidden; 
+    }
+
+    th, td { 
+      padding:12px 16px; 
+      text-align:left; 
+      border-bottom:1px solid #eee; 
+    }
+
+    th { 
+      background:#e9d7f4; 
+      color:#4a2c6e; 
+    }
+
+    .charts {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:25px;
+      background:#f4f0f8;
+      padding:25px;
+      border-radius:12px;
+    }
+
+    .chart-card {
+      background:#fff;
+      border-radius:10px;
+      padding:20px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    #downloadPDF {
+      background:#6a0dad;
+      color:white;
+      padding:10px 20px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:500;
+      transition:background 0.3s;
+      margin-top:10px;
+    }
+    #downloadPDF:hover { background:#4a067c; }
+
+    /* === MODO ROXO ESCURO === */
+    body.modo-roxo {
+      background:#e2c6f5;
+    }
+    body.modo-roxo .sidebar { 
+      background:linear-gradient(180deg,#7a1fa2,#5b0888); }
+    body.modo-roxo .card { background:linear-gradient(145deg,#f3d6fa,#e0bff3); }
+    body.modo-roxo th { background:#b37bd6; color:#fff; }
+    body.modo-roxo #acessibilidade-btn,
+    body.modo-roxo #logout-btn {
+      background:#fff;
+      color:#4a067c;
+    }
+    body.modo-roxo #acessibilidade-btn:hover,
+    body.modo-roxo #logout-btn:hover {
+      background:#4a067c;
+      color:#fff;
+    }
+
+    footer {
+      background:#f5eefb; 
+      text-align:center;
+      padding:10px; 
+      color:#5b2a83; 
+      font-size:14px;
+      font-weight:500; 
+      box-shadow:0 -2px 6px rgba(0,0,0,0.05);
+      margin-top:auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <aside class="sidebar">
+      <img src="img/logo.png.png" alt="Logo Mente Conectada">
+
+      <!-- Botão de Acessibilidade -->
+      <button id="acessibilidade-btn"><i class="fa-solid fa-universal-access"></i> Modo Acessível</button>
+
+      <!-- Botão de Sair -->
+      <button id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+    </aside>
+
+    <main class="main">
+      <div class="top-bar">
+        <h2 style="color:#6a0dad;">Painel do Psicólogo</h2>
+        <div class="login">
+          <span>Dr(a). Psicóloga</span>
+        </div>
+      </div>
+
+      <section class="dashboard">
+        <h1>Bem-vindo(a) de volta 👋</h1>
+
+        <div class="cards">
+          <div class="card"><i class="fa-solid fa-user-group"></i><h3>Pacientes Ativos</h3><p>12</p></div>
+          <div class="card"><i class="fa-solid fa-calendar-check"></i><h3>Consultas Hoje</h3><p>5</p></div>
+          <div class="card"><i class="fa-solid fa-hand-holding-usd"></i><h3>Faturamento (Mês)</h3><p>R$ 2.300,00</p></div>
+          <div class="card"><i class="fa-solid fa-star"></i><h3>Avaliação Média</h3><p>4.8 ★</p></div>
+        </div>
+
+        <div class="charts">
+          <div class="chart-card">
+            <h3>Distribuição de Sessões</h3>
+            <canvas id="barChart"></canvas>
+          </div>
+
+          <div class="chart-card">
+            <h3>Tipos de Atendimento</h3>
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+
+        <button id="downloadPDF"><i class="fa-solid fa-file-pdf"></i> Salvar Gráficos em PDF</button>
+      </section>
+    </main>
+  </div>
+
+  <footer>© 2025 Mente Conectada - Todos os direitos reservados.</footer>
+
+  <script>
+    // Alternar modo acessível
+    document.getElementById('acessibilidade-btn').onclick = () => {
+      document.body.classList.toggle('modo-roxo');
+    };
+
+    // Botão Sair
+    document.getElementById('logout-btn').onclick = () => {
+      if (confirm('Tem certeza que deseja sair?')) {
+        window.location.href = 'login.html'; // Altere para o destino desejado
+      }
+    };
+
+    // === Gráficos ===
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+
+    const barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+        datasets: [{
+          label: 'Sessões por Dia',
+          data: [3, 5, 2, 4, 6],
+          backgroundColor: '#8a4fcf'
+        }]
+      }
+    });
+
+    const pieChart = new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Online', 'Presencial', 'Grupo'],
+        datasets: [{
+          data: [60, 30, 10],
+          backgroundColor: ['#6a0dad', '#a46de0', '#d3b4f3']
+        }]
+      }
+    });
+
+    // === Gerar PDF ===
+    document.getElementById('downloadPDF').onclick = async () => {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF();
+      const bar = document.getElementById('barChart');
+      const pie = document.getElementById('pieChart');
+      const barImg = bar.toDataURL('image/png', 1.0);
+      const pieImg = pie.toDataURL('image/png', 1.0);
+
+      pdf.text("Relatório de Gráficos - Mente Conectada", 20, 20);
+      pdf.addImage(barImg, 'PNG', 15, 30, 180, 80);
+      pdf.addImage(pieImg, 'PNG', 15, 120, 180, 80);
+      pdf.save('graficos_mente_conectada.pdf');
+    };
+  </script>
+</body>
+</html>

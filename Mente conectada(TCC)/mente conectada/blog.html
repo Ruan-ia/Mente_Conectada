@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mente Conectada - Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ===== Reset e base ===== */
+*{margin:0;padding:0;box-sizing:border-box;}
+a{text-decoration:none;}
+body{font-family:'Roboto',sans-serif;background:#f9f9fb;color:#333;scroll-behavior:smooth;}
+.container{display:flex;height:100vh;overflow:hidden;transition:all .3s;}
+
+/* ===== Sidebar ===== */
+.sidebar{
+  background:linear-gradient(180deg,#d8b4e2,#bfa0d6);
+  width:230px;padding:30px 20px;
+  display:flex;flex-direction:column;align-items:center;
+  box-shadow:2px 0 12px rgba(0,0,0,0.15);
+  position:relative;
+  transition:width .3s;
+}
+.sidebar img{width:120px;margin-bottom:40px;transition:transform .3s;}
+.sidebar img:hover{transform:rotate(5deg);}
+.sidebar nav{display:flex;flex-direction:column;gap:12px;width:100%;position:relative;}
+.sidebar a{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 15px;border-radius:10px;
+  color:#fff;font-weight:500;font-size:16px;
+  transition:background 0.3s,color 0.3s, transform .3s;
+  position:relative;z-index:1;
+}
+.sidebar a:hover{background:rgba(255,255,255,0.25);box-shadow:0 0 16px rgba(255,255,255,0.6);transform:translateX(5px);}
+.sidebar a.active{background:rgba(255,255,255,0.25);}
+
+/* Sidebar indicador animado */
+.sidebar-indicator{
+  position:absolute;left:0;width:8px;height:40px;
+  background:linear-gradient(180deg,#fff,#ffccff);
+  border-radius:4px;
+  box-shadow:0 0 14px rgba(255,255,255,0.9);
+  transition:top 0.3s,height 0.3s;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 8px rgba(255,255,255,0.7);}
+  50%{box-shadow:0 0 16px rgba(255,255,255,1);}
+  100%{box-shadow:0 0 8px rgba(255,255,255,0.7);}
+}
+
+/* ===== Main ===== */
+.main{flex:1;display:flex;flex-direction:column;background:#fff;overflow-y:auto;transition:all .3s;}
+
+/* ===== Top bar ===== */
+.top-bar{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.05);position:relative;flex-wrap:wrap;}
+.top-menu{display:flex;gap:20px;position:relative;flex-wrap:wrap;}
+.top-menu a{padding:8px 12px;color:#555;font-weight:500;border-radius:6px;position:relative;transition:.3s;}
+.top-menu a.active,.top-menu a:hover{color:#74275f;}
+.top-indicator{
+  position:absolute;bottom:0;height:4px;width:60px;
+  background:linear-gradient(90deg,#ff99ff,#cc66ff);
+  border-radius:2px;transition:left 0.3s,width 0.3s;
+  animation:pulseTop 2s infinite;
+}
+@keyframes pulseTop{
+  0%{box-shadow:0 0 6px rgba(255,0,255,0.6);}
+  50%{box-shadow:0 0 14px rgba(255,0,255,0.9);}
+  100%{box-shadow:0 0 6px rgba(255,0,255,0.6);}
+}
+
+ .login-group {
+      display:flex;
+      align-items:center;
+      gap:20px;
+      font-size:16px;
+      font-weight:500;
+    }
+
+    .login-group a {
+      color:#555;
+      transition:color 0.3s;
+    }
+
+    .login-group a:hover {color:#6a0dad;}
+
+    .btn-psicologo {
+      color:#4a2c6e !important;
+      font-weight:600;
+    }
+
+    .btn-psicologo:hover {color:#8b2ddb !important;}
+
+/* ===== Blog ===== */
+.blog-header{text-align:center;margin:40px 0;}
+.blog-header h1{font-family:'Playfair Display',serif;font-size:36px;color:#4a2c6e;margin-bottom:10px;}
+.blog-header p{font-size:18px;color:#555;}
+.posts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;padding:0 60px 60px;}
+.post{background:#fafafa;border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.08);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column;}
+.post:hover{transform:translateY(-8px);box-shadow:0 10px 30px rgba(0,0,0,0.12);}
+.post img{width:100%;height:180px;object-fit:cover;}
+.post-content{padding:20px;flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+.post-content h2{font-size:20px;color:#4a2c6e;margin-bottom:10px;}
+.post-content p{font-size:15px;color:#555;flex:1;margin-bottom:15px;}
+.post-content a{display:inline-block;text-decoration:none;background:#6a0dad;color:#fff;padding:10px 15px;border-radius:8px;font-size:14px;text-align:center;transition:.3s;}
+.post-content a:hover{background:#4a2c6e;transform:scale(1.05);}
+
+/* ===== Ler mais animado ===== */
+.extra-text{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #444;
+}
+.extra-text.open{
+  max-height: 200px; /* ajustar conforme o tamanho do texto */
+}
+
+body.preto-branco, body.preto-branco * {
+            background: #181818 !important;
+            color: #fff !important;
+            box-shadow: none !important;
+            border-color: #444 !important;
+        }
+
+
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <img src="img/logo.png.png" alt="Logo Mente Conectada">
+    <nav role="navigation" aria-label="Menu lateral">
+      <a href="page1.html"><span>🏠</span>Início</a>
+      <a href="especialidades.html"><span>📖</span>Especialidades</a>
+      <a href="blog.html" class="active"><span>📰</span>Blog</a>
+      <a href="autoajuda.html"><span>💜</span>Autoajuda</a>
+      <a href="feedback.php"><span>💬</span>Feedback</a>
+      <a href="agendamento.html"><span>📅</span>Agendamento</a>
+    </nav>
+    <div class="sidebar-indicator"></div>
+
+       <button id="acessibilidade-btn" style="
+        margin:20px; 
+        padding:12px 18px; 
+        border-radius:10px; 
+        border:none; 
+        width:90%; 
+        font-size:15px; 
+        font-weight:600; 
+        color:#fff; 
+        background: linear-gradient(90deg, #b06ab3);
+        box-shadow:0 4px 10px rgba(0,0,0,0.15); 
+        cursor:pointer;
+        transition: transform 0.2s ease, opacity 0.3s;
+      ">
+        <i class="fa-solid fa-universal-access"></i> Modo Acessível
+      </button>
+    <script>
+        document.getElementById('acessibilidade-btn').onclick = function() {
+            document.body.classList.toggle('preto-branco');
+        };
+    </script>
+
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="top-menu" role="navigation" aria-label="Menu superior">
+        <a href="page1.html">Início</a>
+        <a href="especialidades.html">Especialidades</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="autoajuda.html">Autoajuda</a>
+        <a href="feedback.php">Feedback</a>
+        <a href="agendamento.html" class="active">Agendamento</a>
+        <div class="top-indicator"></div>
+      </div>
+      <div class="login-group">
+          <a href="login_psicologo.html" class="btn-psicologo">Área do Psicólogo</a>
+          <a href="login.html" class="login-link">Login/Cadastrar</a>
+        </div>
+    </div>
+
+    <!-- Blog header -->
+    <section class="blog-header">
+      <h1>Nosso Blog</h1>
+      <p>Dicas, reflexões e conteúdos para o cuidado com a mente</p>
+    </section>
+
+    <!-- Posts -->
+    <section class="posts">
+      <article class="post">
+        <img src="img/tecnicas.jpg" alt="Exercícios de respiração para calma">
+        <div class="post-content">
+          <h2>Técnicas de Respiração</h2>
+          <p>Aprenda exercícios simples que ajudam a reduzir a ansiedade e trazer mais equilíbrio para o seu dia.</p>
+          <div class="extra-text">
+            <p>Você pode praticar a respiração 4-7-8: inspire pelo nariz por 4s, segure 7s e expire pela boca por 8s. Outra opção é a respiração diafragmática, sentindo a barriga subir e descer.</p>
+          </div>
+          <a href="#" class="ler-mais">Ler mais</a>
+        </div>
+      </article>
+
+      <article class="post">
+        <img src="img/autocuidado1.jpg" alt="Autocuidado digital e saúde mental">
+        <div class="post-content">
+          <h2>Autocuidado Digital</h2>
+          <p>Como equilibrar o uso da tecnologia sem prejudicar a saúde mental no dia a dia.</p>
+          <div class="extra-text">
+            <p>Defina limites de tempo para redes sociais, faça pausas longe do celular e priorize momentos offline para descanso e foco.</p>
+          </div>
+          <a href="#" class="ler-mais">Ler mais</a>
+        </div>
+      </article>
+
+      <article class="post">
+        <img src="img/importancia.jpg" alt="Terapia online para bem-estar emocional">
+        <div class="post-content">
+          <h2>A Importância da Terapia</h2>
+          <p>Descubra como a terapia pode ser uma aliada fundamental para lidar com desafios emocionais.</p>
+          <div class="extra-text">
+            <p>A terapia ajuda a identificar padrões de comportamento, lidar com emoções e melhorar sua qualidade de vida, seja presencial ou online.</p>
+          </div>
+          <a href="#" class="ler-mais">Ler mais</a>
+        </div>
+      </article>
+    </section>
+  </main>
+</div>
+
+
+<script>
+// ===== Sidebar indicador =====
+const sidebar = document.querySelector('.sidebar nav');
+const links = sidebar.querySelectorAll('a');
+const indicator = document.querySelector('.sidebar-indicator');
+function updateSidebarIndicator(link){
+  indicator.style.top = link.offsetTop + 'px';
+  indicator.style.height = link.offsetHeight + 'px';
+}
+updateSidebarIndicator(sidebar.querySelector('a.active'));
+links.forEach(link=>{
+  link.addEventListener('mouseover',()=>updateSidebarIndicator(link));
+  link.addEventListener('mouseout',()=>updateSidebarIndicator(sidebar.querySelector('a.active')));
+  link.addEventListener('click',()=>{
+    links.forEach(l=>l.classList.remove('active'));
+    link.classList.add('active');
+    updateSidebarIndicator(link);
+  });
+});
+window.addEventListener('resize',()=>updateSidebarIndicator(sidebar.querySelector('a.active')));
+
+// ===== Top menu indicador =====
+const topMenu = document.querySelector('.top-menu');
+const topLinks = topMenu.querySelectorAll('a');
+const topIndicator = topMenu.querySelector('.top-indicator');
+function updateTopIndicator(link){
+  topIndicator.style.left = link.offsetLeft + 'px';
+  topIndicator.style.width = link.offsetWidth + 'px';
+}
+updateTopIndicator(topMenu.querySelector('a.active'));
+topLinks.forEach(link=>{
+  link.addEventListener('mouseover',()=>updateTopIndicator(link));
+  link.addEventListener('mouseout',()=>updateTopIndicator(topMenu.querySelector('a.active')));
+  link.addEventListener('click',()=>{
+    topLinks.forEach(l=>l.classList.remove('active'));
+    link.classList.add('active');
+    updateTopIndicator(link);
+  });
+});
+window.addEventListener('resize',()=>updateTopIndicator(topMenu.querySelector('a.active')));
+
+// ===== Ler mais animado =====
+const lerMaisLinks = document.querySelectorAll('.ler-mais');
+lerMaisLinks.forEach(link => {
+  link.addEventListener('click', function(e){
+    e.preventDefault();
+    const extra = this.previousElementSibling; // div.extra-text
+    extra.classList.toggle('open');
+    this.textContent = extra.classList.contains('open') ? 'Ler menos' : 'Ler mais';
+  });
+});
+</script>
+</body>
+</html>

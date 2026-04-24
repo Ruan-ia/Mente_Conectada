@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mente Conectada - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #d6a4f4, #8e44ad);
+      animation: fadeBg 10s infinite alternate;
+    }
+    @keyframes fadeBg {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .login-container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0px 8px 25px rgba(0,0,0,0.15);
+      text-align: center;
+      width: 380px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+    h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 15px; }
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+    .input-field:focus { border-color: #8e44ad; }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #8e44ad;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn:hover { background: #732d91; }
+    .link { margin-top: 10px; display: block; color: #8e44ad; text-decoration: none; font-size: 0.9rem; }
+    .link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Entrar</h1>
+    <form action="index.php" method="POST">
+      <input type="hidden" name="acao" value="login">
+      <input type="email" name="email" placeholder="Seu e-mail" class="input-field" required>
+      <input type="password" name="senha" placeholder="Sua senha" class="input-field" required>
+      <button type="submit" class="btn">Fazer Login</button>
+    </form>
+    <a href="cadastro.php" class="link">Não tem conta? Cadastre-se</a>
+    <a href="page1.html" class="link">Voltar para o inicio</a>
+  </div>
+</body>
+</html>

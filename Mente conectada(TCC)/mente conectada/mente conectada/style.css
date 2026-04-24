@@ -1,0 +1,460 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(120deg, #f3e7e9 0%, #e3eeff 100%);
+  color: #333;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  background: linear-gradient(180deg, #d8b4e2, #bfa0d6);
+  width: 230px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.sidebar img {
+  width: 120px;
+  margin-bottom: 40px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  position: relative;
+}
+
+.sidebar-indicator {
+  position: absolute;
+  left: 0;
+  width: 8px;
+  height: 40px;
+  background: linear-gradient(180deg, #fff, #ffccff);
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+  transition: top 0.3s, height 0.3s, box-shadow 0.3s;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(255, 255, 255, 1);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  }
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  transition: background 0.3s, color 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+.sidebar a.active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ===== Main content ===== */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  overflow-y: auto;
+}
+
+/* ===== Top Bar ===== */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+ .login-group {
+      display:flex;
+      align-items:center;
+      gap:20px;
+      font-size:16px;
+      font-weight:500;
+    }
+
+    .login-group a {
+      color:#555;
+      transition:color 0.3s;
+    }
+
+    .login-group a:hover {color:#6a0dad;}
+
+    .btn-psicologo {
+      color:#4a2c6e !important;
+      font-weight:600;
+    }
+
+    .btn-psicologo:hover {color:#8b2ddb !important;}
+
+/* ===== Top Menu ===== */
+.top-menu {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.top-menu a {
+  padding: 8px 12px;
+  color: #555;
+  font-weight: 500;
+  border-radius: 6px;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.top-menu a.active,
+.top-menu a:hover {
+  color: #74275f;
+}
+
+.top-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 4px;
+  width: 60px;
+  background: linear-gradient(90deg, #ff99ff, #cc66ff);
+  border-radius: 2px;
+  transition: left 0.3s, width 0.3s;
+  animation: pulseTop 2s infinite;
+}
+
+@keyframes pulseTop {
+  0% {
+    box-shadow: 0 0 6px rgba(255, 0, 255, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(255, 0, 255, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 6px rgba(255, 0, 255, 0.6);
+  }
+}
+
+/* ===== Conteúdo ===== */
+.content {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 40px 60px;
+}
+
+.text h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #4a2c6e;
+}
+
+.text h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.text p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.image img {
+  max-width: 380px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Feedback e Comentários ===== */
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: #6a0dad;
+  margin: 40px 0 10px 60px;
+  letter-spacing: 1px;
+}
+
+.comments-section {
+  padding: 0 60px 30px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.comment {
+  background: #f7f3fa;
+  padding: 18px 22px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(106, 13, 173, 0.07);
+}
+
+.comment h4 {
+  margin-bottom: 4px;
+  color: #6a0dad;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.comment p {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.feedback-form {
+  margin: 0 60px 60px 60px;
+  background: #f7f3fa;
+  padding: 28px 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(106, 13, 173, 0.07);
+}
+
+.feedback-form h2 {
+  margin-bottom: 18px;
+  color: #4a2c6e;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+}
+
+.feedback-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #4a2c6e;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border: 1px solid #c9b6e2;
+  border-radius: 8px;
+  font-size: 15px;
+  background: #fff;
+  color: #333;
+}
+
+.feedback-form button {
+  padding: 12px 28px;
+  background: #6a0dad;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.feedback-form button:hover {
+  background: #4a2c6e;
+  transform: scale(1.04);
+}
+
+.success-msg {
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  background: #d4edda;
+  color: #155724;
+  border-radius: 8px;
+  border: 1px solid #c3e6cb;
+  font-size: 15px;
+}
+
+.error-msg {
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  background: #f8d7da;
+  color: #721c24;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+  font-size: 15px;
+}
+
+/* ===== Seções adicionais ===== */
+.therapy-section {
+  padding: 40px 60px;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background: #f4f0f8;
+  border-radius: 12px;
+  margin: 40px;
+}
+
+.therapy-section img {
+  width: 250px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.therapy-text {
+  max-width: 500px;
+}
+
+.therapy-text h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #9c77ca;
+}
+
+.therapy-text p {
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #555;
+}
+
+.therapy-button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: #c692eb;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.therapy-button:hover {
+  background: #8b2ddb;
+}
+
+/* ===== Footer ===== */
+footer {
+  background-color: #bfa0d6;
+  color: white;
+  text-align: center;
+  padding: 1.8rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  user-select: none;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: auto;
+    padding: 15px;
+  }
+
+  .sidebar img {
+    display: none;
+  }
+
+  .sidebar nav {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .sidebar-indicator {
+    display: none;
+  }
+
+  .sidebar a {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 20px;
+  }
+
+  .top-menu {
+    margin-bottom: 10px;
+  }
+
+  .top-indicator {
+    display: none;
+  }
+
+  .content,
+  .therapy-section {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .comments-section,
+  .feedback-form {
+    padding: 20px;
+    margin: 0;
+  }
+
+  .page-title {
+    margin: 30px 0 10px 20px;
+    font-size: 1.5rem;
+  }
+}
+
+/* ===== Modo preto e branco ===== */
+body.preto-branco,
+body.preto-branco * {
+  background: #181818 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  border-color: #444 !important;
+}
+
